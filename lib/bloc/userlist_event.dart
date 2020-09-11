@@ -8,3 +8,13 @@ abstract class UserlistEvent extends Equatable {
 }
 
 class FetchAllUsers extends UserlistEvent {}
+
+class FetchUserDetail extends UserlistEvent {
+  final User user;
+  FetchUserDetail({this.user});
+}
+
+class FetchUserPosts extends UserlistEvent {
+  final id;
+  FetchUserPosts(this.id);
+}

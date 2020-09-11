@@ -4,7 +4,9 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 import 'package:userlist/data/model/UserModel.dart';
+import 'package:userlist/data/model/UserPosts.dart';
 import 'package:userlist/data/userRepository.dart';
+import 'package:userlist/pages/userdetail.dart';
 
 part 'userlist_event.dart';
 part 'userlist_state.dart';
@@ -24,13 +26,21 @@ class UserlistBloc extends Bloc<UserlistEvent, UserlistState> {
     if (event is FetchAllUsers) {
       yield UserlistLoading();
       try {
-        List<dynamic> users = await userRepo.getAllUser();
+        List<User> users = await userRepo.getAllUser();
         print("Got all Users");
         yield UserlistLoaded(users);
       } catch (e) {
         print(e);
         yield UserlistNotLoaded();
       }
+    } else if (event is FetchUserDetail) {
+      yield UserDetailLoaded(event.user);
+    } else if (event is FetchUserPosts) {
+      yield UserPostsLoading();
+      try {
+        List<Userpost> userPosts = await userRepo.getUserPost(event.id);
+        yield UserPostsLoaded(userPosts);
+      } catch (e) {}
     }
   }
 }

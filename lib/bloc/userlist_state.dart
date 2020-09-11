@@ -15,7 +15,7 @@ class UserlistLoaded extends UserlistState {
   final _users;
   UserlistLoaded(this._users);
 
-  List<Users> get getUsers => _users;
+  List<User> get getUser => _users;
 
   @override
   // TODO: implement props
@@ -23,3 +23,24 @@ class UserlistLoaded extends UserlistState {
 }
 
 class UserlistNotLoaded extends UserlistState {}
+
+class UserDetailLoaded extends UserlistState {
+  final _user;
+  UserDetailLoaded(this._user);
+  User get getUserDetail => _user;
+
+  @override
+  // TODO: implement props
+  List<Object> get props => [_user];
+}
+
+class UserPostsLoading extends UserlistState {}
+
+class UserPostsLoaded extends UserlistState {
+  final _userPosts;
+  UserPostsLoaded(this._userPosts);
+  List<Userpost> get getUserPosts => _userPosts;
+
+  @override
+  List<Object> get props => [_userPosts];
+}

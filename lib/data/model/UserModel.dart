@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:userlist/data/model/address.dart';
 import 'package:userlist/data/model/company.dart';
 
-class Users {
+class User {
   final int id;
   final String name;
   final String username;
@@ -15,7 +15,7 @@ class Users {
 
   final Company company;
 
-  Users({
+  User({
     @required this.email,
     @required this.id,
     @required this.username,
@@ -28,8 +28,8 @@ class Users {
 
   Address get getAddress => address;
 
-  factory Users.fromJson(Map<String, dynamic> json) {
-    return Users(
+  factory User.fromJson(Map<String, dynamic> json) {
+    return User(
       email: json['email'],
       id: json['id'],
       username: json['username'],
