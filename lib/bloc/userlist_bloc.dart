@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
+import 'package:userlist/data/model/UserComments.dart';
 import 'package:userlist/data/model/UserModel.dart';
 import 'package:userlist/data/model/UserPosts.dart';
 import 'package:userlist/data/userRepository.dart';
@@ -40,6 +41,13 @@ class UserlistBloc extends Bloc<UserlistEvent, UserlistState> {
       try {
         List<Userpost> userPosts = await userRepo.getUserPost(event.id);
         yield UserPostsLoaded(userPosts);
+      } catch (e) {}
+    } else if (event is FetchUserComments) {
+      yield UserCommentsLoading();
+      try {
+        List<UserComment> userComments =
+            await userRepo.getUserComments(event.postid);
+        yield UserCommentsLoaded(userComments);
       } catch (e) {}
     }
   }

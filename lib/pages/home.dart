@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:http/http.dart';
 import 'package:userlist/bloc/userlist_bloc.dart';
+import 'package:userlist/data/model/UserComments.dart';
 import 'package:userlist/data/model/UserModel.dart';
 import 'package:userlist/data/model/UserPosts.dart';
 import 'package:userlist/pages/userdetail.dart';
@@ -45,17 +47,16 @@ class _HomePageState extends State<HomePage> {
                       ))
                   .toList(),
             );
-          } else if (state is UserlistInitial) {
-            print(state.toString());
-            return CircularProgressIndicator();
           } else if (state is UserDetailLoaded) {
             return UserDetail(
               user: state.getUserDetail,
             );
           } else if (state is UserPostsLoaded) {
-            return userPostsPage(state.getUserPosts);
+            return userPostsPage(state.getUserPosts, userlistBloc);
+          } else if (state is UserCommentsLoaded) {
+            return userCommentsPage(state.getUserComments);
           } else {
-            return Center(child: Text(state.toString()));
+            return CircularProgressIndicator();
           }
         },
       ),
@@ -63,11 +64,46 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-Widget userPostsPage(List<Userpost> postlist) {
+Widget userPostsPage(List<Userpost> postlist, UserlistBloc userlistBloc) {
   return ListView.builder(
     itemCount: postlist.length,
     itemBuilder: (context, index) {
-      return Text(postlist[index].title);
+      return ListTile(
+        title: Text(postlist[index].title),
+        subtitle: Text(postlist[index].body),
+        onTap: () {
+          userlistBloc.add(FetchUserComments(postlist[index].id));
+          print("poror");
+        },
+      );
+      // return Text(postlist[index].title);
+    },
+  );
+}
+
+Widget userCommentsPage(List<UserComment> commentlist) {
+  print(commentlist[0]);
+  return ListView.builder(
+    itemCount: commentlist.length,
+    itemBuilder: (context, index) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text('Name ' + commentlist[index].name),
+          SizedBox(
+            height: 7,
+          ),
+          Text('Email ' + commentlist[index].email),
+          SizedBox(
+            height: 7,
+          ),
+          Text('Body ' + commentlist[index].body),
+          SizedBox(
+            height: 30,
+          ),
+        ],
+      );
+      // return Text(postlist[index].title);
     },
   );
 }

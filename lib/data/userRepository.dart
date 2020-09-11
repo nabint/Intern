@@ -1,4 +1,5 @@
 import 'package:http/http.dart' as http;
+import 'package:userlist/data/model/UserComments.dart';
 import 'package:userlist/data/model/UserPosts.dart';
 import 'dart:convert';
 
@@ -35,5 +36,19 @@ class UserRepository {
         decodedbody.map((item) => Userpost.fromJson(item)).toList();
     print(userposts);
     return userposts;
+  }
+
+  Future<List<UserComment>> getUserComments(int postid) async {
+    final result = await http.Client()
+        .get("https://jsonplaceholder.typicode.com/posts/$postid/comments");
+    if (result.statusCode != 200) throw Exception();
+    return parsedUserComments(result.body);
+  }
+
+  List<UserComment> parsedUserComments(response) {
+    List decodedbody = json.decode(response);
+    List<UserComment> userComments =
+        decodedbody.map((item) => UserComment.fromJson(item)).toList();
+    return userComments;
   }
 }

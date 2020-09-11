@@ -18,3 +18,8 @@ class FetchUserPosts extends UserlistEvent {
   final id;
   FetchUserPosts(this.id);
 }
+
+class FetchUserComments extends UserlistEvent {
+  final postid;
+  FetchUserComments(this.postid);
+}

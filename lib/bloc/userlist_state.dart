@@ -44,3 +44,14 @@ class UserPostsLoaded extends UserlistState {
   @override
   List<Object> get props => [_userPosts];
 }
+
+class UserCommentsLoading extends UserlistState {}
+
+class UserCommentsLoaded extends UserlistState {
+  final _userComments;
+  UserCommentsLoaded(this._userComments);
+  List<UserComment> get getUserComments => _userComments;
+
+  @override
+  List<Object> get props => [_userComments];
+}
