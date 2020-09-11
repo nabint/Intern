@@ -26,6 +26,8 @@ class Users {
     @required this.website,
   });
 
+  Address get getAddress => address;
+
   factory Users.fromJson(Map<String, dynamic> json) {
     return Users(
       email: json['email'],
