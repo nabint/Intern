@@ -8,14 +8,18 @@ class UserRepository {
     final result =
         await http.Client().get("https://jsonplaceholder.typicode.com/users/");
     if (result.statusCode != 200) throw Exception();
+    // print(result.body);
     return parsedUsers(result.body);
   }
 
   List<Users> parsedUsers(response) {
-    final decodedbody = json.decode(response);
-    List<Users> users = decodedbody.map((item) {
-      Users.fromJson(item);
-    }).toList();
+    List decodedbody = json.decode(response);
+    List<Users> users =
+        decodedbody.map((dynamic item) => Users.fromJson(item)).toList();
+    // List<dynamic> users = decodedbody.map((item) {
+    // Users.fromJson(item);
+    // }).toList();
+    print(users);
     return users;
   }
 }

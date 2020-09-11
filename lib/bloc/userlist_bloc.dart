@@ -24,9 +24,11 @@ class UserlistBloc extends Bloc<UserlistEvent, UserlistState> {
     if (event is FetchAllUsers) {
       yield UserlistLoading();
       try {
-        List<Users> users = await userRepo.getAllUser();
+        List<dynamic> users = await userRepo.getAllUser();
+        print("Got all Users");
         yield UserlistLoaded(users);
-      } catch (_) {
+      } catch (e) {
+        print(e);
         yield UserlistNotLoaded();
       }
     }
