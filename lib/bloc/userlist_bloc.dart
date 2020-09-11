@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
@@ -40,8 +39,11 @@ class UserlistBloc extends Bloc<UserlistEvent, UserlistState> {
       yield UserPostsLoading();
       try {
         List<Userpost> userPosts = await userRepo.getUserPost(event.id);
+        print("UserPost loaded");
         yield UserPostsLoaded(userPosts);
-      } catch (e) {}
+      } catch (e) {
+        print(e);
+      }
     } else if (event is FetchUserComments) {
       yield UserCommentsLoading();
       try {
@@ -51,4 +53,6 @@ class UserlistBloc extends Bloc<UserlistEvent, UserlistState> {
       } catch (e) {}
     }
   }
+
+  void dispatch(FetchUserDetail fetchUserDetail) {}
 }

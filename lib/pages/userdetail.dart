@@ -18,17 +18,8 @@ class UserDetail extends StatelessWidget {
         actions: [
           IconButton(
             icon: Icon(Icons.local_post_office),
-            // onPressed: () {
-            //   Navigator.push(
-            //     context,
-            //     MaterialPageRoute(
-            //       builder: (context) => PostList(
-            //         id: user.id,
-            //       ),
-            //     ),
-            //   );
-            // },
             onPressed: () {
+              print("user id is" + user.id.toString());
               userlistBloc.add(FetchUserPosts(user.id));
             },
           ),

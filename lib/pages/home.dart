@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:http/http.dart';
 import 'package:userlist/bloc/userlist_bloc.dart';
 import 'package:userlist/data/model/UserComments.dart';
 import 'package:userlist/data/model/UserModel.dart';
@@ -48,15 +47,22 @@ class _HomePageState extends State<HomePage> {
                   .toList(),
             );
           } else if (state is UserDetailLoaded) {
-            return UserDetail(
-              user: state.getUserDetail,
+            return new WillPopScope(
+              onWillPop: () async {
+                print("Back Pressed");
+                userlistBloc.add(FetchAllUsers());
+                return false;
+              },
+              child: UserDetail(
+                user: state.getUserDetail,
+              ),
             );
           } else if (state is UserPostsLoaded) {
             return userPostsPage(state.getUserPosts, userlistBloc);
           } else if (state is UserCommentsLoaded) {
             return userCommentsPage(state.getUserComments);
           } else {
-            return CircularProgressIndicator();
+            return Center(child: CircularProgressIndicator());
           }
         },
       ),
