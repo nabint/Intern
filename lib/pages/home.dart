@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:userlist/bloc/userlist_bloc.dart';
-import 'package:userlist/data/model/UserComments.dart';
 import 'package:userlist/data/model/UserModel.dart';
 import 'package:userlist/pages/userdetail.dart';
+import 'package:userlist/widgets/silver_user_list.dart';
 import './userPosts.dart';
 import './userComments.dart';
 
@@ -33,24 +33,9 @@ class _HomePageState extends State<HomePage> {
         bloc: userlistBloc,
         builder: (context, state) {
           if (state is UserlistLoaded) {
-            print(state.toString());
-            return ListView(
-              shrinkWrap: true,
-              physics: ClampingScrollPhysics(),
-              children: state.getUser
-                  .map((User user) => ListTile(
-                        title: Text(
-                          user.id.toString(),
-                        ),
-                        subtitle: Text(user.name),
-                        onTap: () {
-                          userlistBloc.add(FetchUserDetail(user: user));
-                          useR = user;
-                        },
-                      ))
-                  .toList(),
-            );
+            return SliverUserList(state.getUser, userlistBloc);
           } else if (state is UserDetailLoaded) {
+            useR = state.getUserDetail;
             return new WillPopScope(
               onWillPop: () async {
                 print("Back Pressed");
