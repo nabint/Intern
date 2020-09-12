@@ -14,7 +14,6 @@ class UserRepository {
     var cacheDir = await getTemporaryDirectory();
     String fileName = "UserData.json";
     if (await File(cacheDir.path + "/" + fileName).exists()) {
-      print("Loading from Cache");
       var response = File(cacheDir.path + "/" + fileName).readAsStringSync();
       return parsedUser(response);
     } else {
@@ -36,7 +35,6 @@ class UserRepository {
     List<User> users = decodedbody.map((item) {
       return User.fromJson(item);
     }).toList();
-    print(users);
     return users;
   }
 

@@ -9,15 +9,16 @@ class AlbumRepository {
         "https://jsonplaceholder.typicode.com/users/$userId/albums";
     final result = await http.Client().get(API_URL);
     if (result.statusCode != 200) throw Exception();
+
     return parsedAlbum(result.body);
   }
 
   List<Album> parsedAlbum(response) {
-    List decodedbody = json.decode(response);
+    List<dynamic> decodedbody = json.decode(response);
+    print("decoded body" + decodedbody.toString());
     List<Album> albums = decodedbody.map((item) {
       return Album.fromJson(item);
-    });
-    print(albums);
+    }).toList();
     return albums;
   }
 }
