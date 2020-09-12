@@ -7,20 +7,22 @@ class Todos extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(itemBuilder: (context, index) {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Text(todolist[index].title),
-          SizedBox(
-            height: 10,
-          ),
-          Text(todolist[index].completed.toString()),
-          SizedBox(
-            height: 30,
-          ),
-        ],
-      );
-    });
+    return ListView.builder(
+        itemCount: todolist.length,
+        itemBuilder: (context, index) {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text(todolist[index].title),
+              SizedBox(
+                height: 10,
+              ),
+              Text(todolist[index].completed.toString()),
+              SizedBox(
+                height: 30,
+              ),
+            ],
+          );
+        });
   }
 }

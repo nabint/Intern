@@ -46,7 +46,8 @@ class _UserDetailState extends State<UserDetail> {
             ),
           ],
         ),
-        bottomNavigationBar: BottomNavBar(_onItemTapped, _selectedIndex),
+        bottomNavigationBar:
+            AnimatedBottomNavBar(_onItemTapped, _selectedIndex),
         body: widgetoptions[_selectedIndex]);
   }
 

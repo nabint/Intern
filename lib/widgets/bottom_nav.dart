@@ -1,28 +1,112 @@
 import 'package:flutter/material.dart';
 
-class BottomNavBar extends StatelessWidget {
+class AnimatedBottomNavBar extends StatelessWidget {
   final Function ontapPressed;
   final _selectedIndex;
-  BottomNavBar(this.ontapPressed, this._selectedIndex);
+  AnimatedBottomNavBar(this.ontapPressed, this._selectedIndex);
+
   @override
   Widget build(BuildContext context) {
-    return BottomNavigationBar(
-      currentIndex: _selectedIndex,
-      onTap: ontapPressed,
-      items: <BottomNavigationBarItem>[
-        BottomNavigationBarItem(
-            icon: Icon(Icons.person, color: Color.fromARGB(255, 0, 0, 0)),
-            title: Text(
-              'Details',
-              style: TextStyle(color: Colors.black),
-            )),
-        BottomNavigationBarItem(
-            icon: Icon(Icons.photo_album, color: Color.fromARGB(255, 0, 0, 0)),
-            title: new Text('Albums')),
-        BottomNavigationBarItem(
-            icon: Icon(Icons.assignment, color: Color.fromARGB(255, 0, 0, 0)),
-            title: new Text('Todos')),
-      ],
+    // TODO: implement build
+    return Container(
+      height: kToolbarHeight,
+      decoration: BoxDecoration(color: Colors.white),
+      child: Row(
+        children: <Widget>[
+          Expanded(
+            child: InkWell(
+              onTap: () => ontapPressed(0),
+              child: BottomNavItem(
+                icon: Icons.person,
+                title: "Details",
+                isActive: _selectedIndex == 0,
+              ),
+            ),
+          ),
+          Expanded(
+            child: InkWell(
+              onTap: () => ontapPressed(1),
+              child: BottomNavItem(
+                icon: Icons.photo_album,
+                title: "Album",
+                isActive: _selectedIndex == 1,
+              ),
+            ),
+          ),
+          Expanded(
+            child: InkWell(
+              onTap: () => ontapPressed(2),
+              child: BottomNavItem(
+                icon: Icons.assignment,
+                title: "Todos",
+                isActive: _selectedIndex == 2,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class BottomNavItem extends StatelessWidget {
+  final bool isActive;
+  final IconData icon;
+  final Color activeColor;
+  final Color inactiveColor;
+  final String title;
+  const BottomNavItem(
+      {Key key,
+      this.isActive = false,
+      this.icon,
+      this.activeColor,
+      this.inactiveColor,
+      this.title})
+      : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedSwitcher(
+      transitionBuilder: (child, animation) {
+        return SlideTransition(
+          position: Tween<Offset>(
+            begin: const Offset(0.0, 1.0),
+            end: Offset.zero,
+          ).animate(animation),
+          child: child,
+        );
+      },
+      duration: Duration(milliseconds: 500),
+      reverseDuration: Duration(milliseconds: 200),
+      child: isActive
+          ? Container(
+              color: Colors.white,
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    title,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: activeColor ?? Theme.of(context).primaryColor,
+                    ),
+                  ),
+                  const SizedBox(height: 5.0),
+                  Container(
+                    width: 5.0,
+                    height: 5.0,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: activeColor ?? Theme.of(context).primaryColor,
+                    ),
+                  ),
+                ],
+              ),
+            )
+          : Icon(
+              icon,
+              color: inactiveColor ?? Colors.grey,
+            ),
     );
   }
 }
