@@ -3,8 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:userlist/bloc/userlist_bloc.dart';
 import 'package:userlist/data/model/UserComments.dart';
 import 'package:userlist/data/model/UserModel.dart';
-import 'package:userlist/data/model/UserPosts.dart';
 import 'package:userlist/pages/userdetail.dart';
+import './userPosts.dart';
+import './userComments.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -13,6 +14,8 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   UserlistBloc userlistBloc;
+  var useR;
+  var postId;
   @override
   void initState() {
     userlistBloc = BlocProvider.of<UserlistBloc>(context);
@@ -42,6 +45,7 @@ class _HomePageState extends State<HomePage> {
                         subtitle: Text(user.name),
                         onTap: () {
                           userlistBloc.add(FetchUserDetail(user: user));
+                          useR = user;
                         },
                       ))
                   .toList(),
@@ -58,9 +62,23 @@ class _HomePageState extends State<HomePage> {
               ),
             );
           } else if (state is UserPostsLoaded) {
-            return userPostsPage(state.getUserPosts, userlistBloc);
+            return WillPopScope(
+              onWillPop: () async {
+                print("Back Pressed");
+                userlistBloc.add(FetchUserDetail(user: useR));
+                return false;
+              },
+              child: UserPostsPage(
+                  postlist: state.getUserPosts, userlistBloc: userlistBloc),
+            );
           } else if (state is UserCommentsLoaded) {
-            return userCommentsPage(state.getUserComments);
+            return WillPopScope(
+              onWillPop: () async {
+                userlistBloc.add(FetchUserPosts(useR.id));
+                return false;
+              },
+              child: UserCommentsPage(state.getUserComments),
+            );
           } else {
             return Center(child: CircularProgressIndicator());
           }
@@ -68,48 +86,4 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
-}
-
-Widget userPostsPage(List<Userpost> postlist, UserlistBloc userlistBloc) {
-  return ListView.builder(
-    itemCount: postlist.length,
-    itemBuilder: (context, index) {
-      return ListTile(
-        title: Text(postlist[index].title),
-        subtitle: Text(postlist[index].body),
-        onTap: () {
-          userlistBloc.add(FetchUserComments(postlist[index].id));
-          print("poror");
-        },
-      );
-      // return Text(postlist[index].title);
-    },
-  );
-}
-
-Widget userCommentsPage(List<UserComment> commentlist) {
-  print(commentlist[0]);
-  return ListView.builder(
-    itemCount: commentlist.length,
-    itemBuilder: (context, index) {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Text('Name ' + commentlist[index].name),
-          SizedBox(
-            height: 7,
-          ),
-          Text('Email ' + commentlist[index].email),
-          SizedBox(
-            height: 7,
-          ),
-          Text('Body ' + commentlist[index].body),
-          SizedBox(
-            height: 30,
-          ),
-        ],
-      );
-      // return Text(postlist[index].title);
-    },
-  );
 }

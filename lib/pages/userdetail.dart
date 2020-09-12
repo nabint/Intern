@@ -10,6 +10,7 @@ class UserDetail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // ignore: close_sinks
     final userlistBloc = BlocProvider.of<UserlistBloc>(context);
 
     return Scaffold(
@@ -19,27 +20,15 @@ class UserDetail extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.local_post_office),
             onPressed: () {
-              print("user id is" + user.id.toString());
               userlistBloc.add(FetchUserPosts(user.id));
             },
           ),
           IconButton(
             icon: Icon(Icons.comment),
-            // onPressed: () {
-            //   Navigator.push(
-            //     context,
-            //     MaterialPageRoute(builder: (context) => CommentList()),
-            //   );
-            // },
             onPressed: () {},
           ),
         ],
       ),
-      // floatingActionButton: FloatingActionButton(
-      //   child: Icon(Icons.delete),
-      //   onPressed: () async {
-      //     await httpService.deletePost(user.id);
-      //   },
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(12.0),

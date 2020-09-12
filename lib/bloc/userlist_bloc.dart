@@ -6,7 +6,6 @@ import 'package:userlist/data/model/UserComments.dart';
 import 'package:userlist/data/model/UserModel.dart';
 import 'package:userlist/data/model/UserPosts.dart';
 import 'package:userlist/data/userRepository.dart';
-import 'package:userlist/pages/userdetail.dart';
 
 part 'userlist_event.dart';
 part 'userlist_state.dart';
@@ -16,7 +15,6 @@ class UserlistBloc extends Bloc<UserlistEvent, UserlistState> {
   UserlistBloc(this.userRepo);
 
   @override
-  // TODO: implement initialState
   UserlistState get initialState => UserlistInitial();
 
   @override
@@ -24,19 +22,18 @@ class UserlistBloc extends Bloc<UserlistEvent, UserlistState> {
     UserlistEvent event,
   ) async* {
     if (event is FetchAllUsers) {
-      yield UserlistLoading();
+      yield (Loading());
       try {
         List<User> users = await userRepo.getAllUser();
         print("Got all Users");
         yield UserlistLoaded(users);
       } catch (e) {
         print(e);
-        yield UserlistNotLoaded();
       }
     } else if (event is FetchUserDetail) {
       yield UserDetailLoaded(event.user);
     } else if (event is FetchUserPosts) {
-      yield UserPostsLoading();
+      yield (Loading());
       try {
         List<Userpost> userPosts = await userRepo.getUserPost(event.id);
         print("UserPost loaded");
@@ -45,14 +42,13 @@ class UserlistBloc extends Bloc<UserlistEvent, UserlistState> {
         print(e);
       }
     } else if (event is FetchUserComments) {
-      yield UserCommentsLoading();
       try {
         List<UserComment> userComments =
             await userRepo.getUserComments(event.postid);
         yield UserCommentsLoaded(userComments);
-      } catch (e) {}
+      } catch (e) {
+        print(e);
+      }
     }
   }
-
-  void dispatch(FetchUserDetail fetchUserDetail) {}
 }
