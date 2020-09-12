@@ -4,9 +4,10 @@ import 'package:userlist/bloc/userlist_bloc.dart';
 import 'package:userlist/data/albumRepository.dart';
 import 'package:userlist/data/model/UserModel.dart';
 import 'package:userlist/data/model/album.dart';
+import 'package:userlist/data/photoRepository.dart';
 import 'package:userlist/widgets/user_detail_widget.dart';
 import '../widgets/bottom_nav.dart';
-import '../widgets/photo_album.dart';
+import '../widgets/album.dart';
 
 class UserDetail extends StatefulWidget {
   final User user;
@@ -25,18 +26,7 @@ class _UserDetailState extends State<UserDetail> {
   Widget build(BuildContext context) {
     List<Widget> widgetoptions = <Widget>[
       UserDetailWidget(widget.user),
-      FutureBuilder(
-          future: widget._albumRepository.getAllAlbums(widget.user.id),
-          builder: (BuildContext context, AsyncSnapshot<List<Album>> snapshot) {
-            if (snapshot.hasData) {
-              List<Album> albums = snapshot.data;
-              print(albums);
-              return PhotoAlbum(
-                albums: albums,
-              );
-            }
-            return CircularProgressIndicator();
-          })
+      albumPage(),
     ];
     // ignore: close_sinks
     final userlistBloc = BlocProvider.of<UserlistBloc>(context);
@@ -60,5 +50,20 @@ class _UserDetailState extends State<UserDetail> {
     setState(() {
       _selectedIndex = index;
     });
+  }
+
+  Widget albumPage() {
+    return FutureBuilder(
+        future: widget._albumRepository.getAllAlbums(widget.user.id),
+        builder: (BuildContext context, AsyncSnapshot<List<Album>> snapshot) {
+          if (snapshot.hasData) {
+            List<Album> albums = snapshot.data;
+            print(albums);
+            return PhotoAlbum(
+              albums: albums,
+            );
+          }
+          return Center(child: CircularProgressIndicator());
+        });
   }
 }

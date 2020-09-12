@@ -15,7 +15,6 @@ class AlbumRepository {
 
   List<Album> parsedAlbum(response) {
     List<dynamic> decodedbody = json.decode(response);
-    print("decoded body" + decodedbody.toString());
     List<Album> albums = decodedbody.map((item) {
       return Album.fromJson(item);
     }).toList();
