@@ -4,10 +4,12 @@ import 'package:userlist/bloc/userlist_bloc.dart';
 import 'package:userlist/data/albumRepository.dart';
 import 'package:userlist/data/model/UserModel.dart';
 import 'package:userlist/data/model/album.dart';
-import 'package:userlist/data/photoRepository.dart';
+import 'package:userlist/data/model/todo.dart';
+import 'package:userlist/data/todoRepository.dart';
+import 'package:userlist/widgets/todo_widget.dart';
 import 'package:userlist/widgets/user_detail_widget.dart';
 import '../widgets/bottom_nav.dart';
-import '../widgets/album.dart';
+import '../widgets/album_widget.dart';
 
 class UserDetail extends StatefulWidget {
   final User user;
@@ -17,6 +19,7 @@ class UserDetail extends StatefulWidget {
   @override
   _UserDetailState createState() => _UserDetailState();
   AlbumRepository _albumRepository = new AlbumRepository();
+  TodoRepository todoRepo = new TodoRepository();
 }
 
 class _UserDetailState extends State<UserDetail> {
@@ -27,6 +30,7 @@ class _UserDetailState extends State<UserDetail> {
     List<Widget> widgetoptions = <Widget>[
       UserDetailWidget(widget.user),
       albumPage(),
+      todoPage()
     ];
     // ignore: close_sinks
     final userlistBloc = BlocProvider.of<UserlistBloc>(context);
@@ -61,6 +65,21 @@ class _UserDetailState extends State<UserDetail> {
             print(albums);
             return PhotoAlbum(
               albums: albums,
+            );
+          }
+          return Center(child: CircularProgressIndicator());
+        });
+  }
+
+  Widget todoPage() {
+    return FutureBuilder(
+        future: widget.todoRepo.getAllTodos(widget.user.id),
+        builder: (BuildContext context, AsyncSnapshot<List<Todo>> snapshot) {
+          if (snapshot.hasData) {
+            List<Todo> todos = snapshot.data;
+            // print(albums);
+            return Todos(
+              todolist: todos,
             );
           }
           return Center(child: CircularProgressIndicator());
