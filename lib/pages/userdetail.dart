@@ -36,10 +36,24 @@ class _UserDetailState extends State<UserDetail> {
     final userlistBloc = BlocProvider.of<UserlistBloc>(context);
     return Scaffold(
         appBar: AppBar(
-          title: Text(widget.user.name),
+          backgroundColor: Colors.white,
+          title: Text(
+            widget.user.name,
+            style: TextStyle(color: Colors.black),
+          ),
           actions: [
+            Center(
+              child: Text(
+                "Posts",
+                style: TextStyle(color: Colors.black),
+              ),
+            ),
             IconButton(
-              icon: Icon(Icons.local_post_office),
+              iconSize: 40,
+              icon: Icon(
+                Icons.toc,
+                color: Colors.black,
+              ),
               onPressed: () {
                 userlistBloc.add(FetchUserPosts(widget.user.id));
               },

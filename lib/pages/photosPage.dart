@@ -11,7 +11,15 @@ class PhotosPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Users"),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Colors.black),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+        backgroundColor: Colors.white,
+        title: Text(
+          "Photos",
+          style: TextStyle(color: Colors.black),
+        ),
       ),
       body: FutureBuilder(
         future: _photoRepository.getAllPhotos(albumid),

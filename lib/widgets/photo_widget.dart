@@ -8,20 +8,25 @@ class PhotoWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      elevation: 1.5,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        mainAxisSize: MainAxisSize.min,
-        verticalDirection: VerticalDirection.down,
-        children: <Widget>[
-          Image.network(
-            photo.photoUrl,
-            width: 100,
-            height: 130.0,
+        elevation: 1.5,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15.0),
+        ),
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.all(
+              Radius.circular(15),
+            ),
+            image: DecorationImage(
+                image: NetworkImage(photo.photoUrl),
+                fit: BoxFit.fitHeight,
+                alignment: Alignment.topCenter),
           ),
-          Center(child: Text(photo.photoTitle)),
-        ],
-      ),
-    );
+          // child: Center(
+          //     child: Text(
+          //   photo.photoTitle,
+          //   // style: TextStyle(color: Colors.white),
+          // )),
+        ));
   }
 }
