@@ -10,6 +10,7 @@ class Todos extends StatelessWidget {
     Widget icon;
 
     return ListView.builder(
+        physics: BouncingScrollPhysics(),
         itemCount: todolist.length,
         itemBuilder: (context, index) {
           icon = todolist[index].completed

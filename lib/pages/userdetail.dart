@@ -32,9 +32,25 @@ class _UserDetailState extends State<UserDetail> {
       albumPage(),
       todoPage()
     ];
+    Widget floatingActionBtn;
     // ignore: close_sinks
     final userlistBloc = BlocProvider.of<UserlistBloc>(context);
+    if (_selectedIndex == 2) {
+      print("index is 2");
+
+      floatingActionBtn = FloatingActionButton(
+        backgroundColor: Colors.green,
+        child: Icon(
+          Icons.add,
+          size: 20,
+        ),
+        onPressed: () {},
+      );
+    } else {
+      floatingActionBtn = Container();
+    }
     return Scaffold(
+        floatingActionButton: floatingActionBtn,
         appBar: AppBar(
           backgroundColor: Colors.white,
           title: Text(
