@@ -4,11 +4,14 @@ A new Flutter project Created for the sake of Intern role at YIPL
 
 ## App Details
 UserList is a simple App used to list out all the datas and features specified in the YIPL challenges.
-All the app datas are fetched from the provided API
+All the app datas are fetched from the provided API.
+Adding,Deleting and Updating Todo feature cannot be completed because the api doesn't allows to delete,
+update and add the data on the api
 
 ## Home Page
 App Fetches all the users present in the Api,and the values are cached in order to make the next cycle
 much more faster, and displays them in our home page as shown below:
+
 ![Screenshot](Screenshot/Screenshot_1.png)
 ## Details Page
 Upon selecting a particular user displayed in home page,the state of the app changes and a new state is loaded
@@ -37,5 +40,6 @@ album as show below:
 ## Todos Page
 Now on clicking the todo icon displayed on the bottom navigation bar,Todo page is loaded which displays all the Todos for that
 User,
+
 ![Screenshot](Screenshot/Screenshot_7.png)
 
