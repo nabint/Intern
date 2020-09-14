@@ -1,12 +1,14 @@
-# userlist
+#UserList
 
-A new Flutter project.
+A new Flutter project Created for the sake of Intern role at YIPL
 
-## Getting Started
+## App Details
+UserList is a simple App used to list out all the datas and features specified in the YIPL challenges
 
-This project is a starting point for a Flutter application.
+#Home Page
 
-A few resources to get you started if this is your first Flutter project:
+![Screenshot](Screenshot/Screenshot_1.png)
+
 
 - [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
 - [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
