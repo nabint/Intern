@@ -52,16 +52,3 @@ class Todos extends StatelessWidget {
         });
   }
 }
-// Column(
-//             crossAxisAlignment: CrossAxisAlignment.start,
-//             children: <Widget>[
-//               Text(todolist[index].title),
-//               SizedBox(
-//                 height: 10,
-//               ),
-//               Text(todolist[index].completed.toString()),
-//               SizedBox(
-//                 height: 30,
-//               ),
-//             ],
-//           );

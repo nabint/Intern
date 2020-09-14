@@ -30,7 +30,7 @@ class _HomePageState extends State<HomePage> {
 
     return Container(
       child: BlocBuilder<UserlistBloc, UserlistState>(
-        bloc: userlistBloc,
+        cubit: userlistBloc,
         builder: (context, state) {
           if (state is UserlistLoaded) {
             return SliverUserList(state.getUser, userlistBloc);

@@ -14,6 +14,9 @@ class SliverUserList extends StatelessWidget {
       body: CustomScrollView(
         slivers: <Widget>[
           SliverAppBar(
+            onStretchTrigger: () {
+              print("Strected");
+            },
             backgroundColor: Colors.white,
             floating: false,
             pinned: true,

@@ -12,7 +12,7 @@ part 'userlist_state.dart';
 
 class UserlistBloc extends Bloc<UserlistEvent, UserlistState> {
   UserRepository userRepo;
-  UserlistBloc(this.userRepo);
+  UserlistBloc(this.userRepo) : super(null);
 
   @override
   UserlistState get initialState => UserlistInitial();
